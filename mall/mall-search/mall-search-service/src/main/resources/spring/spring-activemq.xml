@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
+
+    <!--配置ActiveMQ-->
+    <bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="tcp://192.168.25.134:61616"/>
+    </bean>
+
+    <!-- 将ActiveMQ整合到spring框架中 -->
+    <bean id="connectionFactory" class="org.springframework.jms.connection.SingleConnectionFactory">
+        <!-- 对应ActiveMQ的链接工厂 -->
+        <property name="targetConnectionFactory" ref="targetConnectionFactory"/>
+    </bean>
+
+
+    <!-- 配置队列， Point to Point -->
+    <bean id="queueDestination" class="org.apache.activemq.command.ActiveMQQueue">
+        <!-- 定义队列名 -->
+        <constructor-arg>
+            <value>mall-queue</value>
+        </constructor-arg>
+    </bean>
+
+    <!-- 配置发布/订阅 -->
+    <bean id="topicDestination" class="org.apache.activemq.command.ActiveMQTopic">
+        <constructor-arg value="itemAddTopic"/>
+    </bean>
+
+    <!-- 配置消费者 -->
+    <bean id="mallMessageListener" class="com.deceiver.message.MallMessageListener"/>
+    <bean id="itemAddMessageListener" class="com.deceiver.message.ItemAddMessageListener"/>
+
+    <!-- 配置消息监听容器 -->
+    <!-- 监听-点对点队列 -->
+    <bean class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="destination" ref="queueDestination"/>
+        <property name="messageListener" ref="mallMessageListener"/>
+    </bean>
+
+    <!-- 监听-发布/订阅队列 -->
+    <bean class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="destination" ref="topicDestination"/>
+        <property name="messageListener" ref="itemAddMessageListener"/>
+    </bean>
+</beans>

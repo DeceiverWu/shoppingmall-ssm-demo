@@ -1,0 +1,5 @@
+com\deceiver\test\ActiveMQTest.class
+com\deceiver\test\RedisTest.class
+com\deceiver\test\SolrTest.class
+com\deceiver\test\FastDFSTest.class
+com\deceiver\test\FreemarkTest.class

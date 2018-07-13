@@ -1,0 +1,11 @@
+com\deceiver\dao\TbItemCatMapper.class
+com\deceiver\dao\TbOrderShippingMapper.class
+com\deceiver\dao\TbUserMapper.class
+com\deceiver\dao\TbOrderItemMapper.class
+com\deceiver\dao\TbContentCategoryMapper.class
+com\deceiver\dao\TbItemDescMapper.class
+com\deceiver\dao\TbItemMapper.class
+com\deceiver\dao\TbItemParamItemMapper.class
+com\deceiver\dao\TbContentMapper.class
+com\deceiver\dao\TbItemParamMapper.class
+com\deceiver\dao\TbOrderMapper.class

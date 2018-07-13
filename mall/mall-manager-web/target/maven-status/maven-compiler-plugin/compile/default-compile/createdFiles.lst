@@ -1,0 +1,7 @@
+com\deceiver\controller\PageController.class
+com\deceiver\controller\SearchItemController.class
+com\deceiver\controller\ItemCatController.class
+com\deceiver\controller\ItemController.class
+com\deceiver\controller\ContentCategoryController.class
+com\deceiver\controller\PictureController.class
+com\deceiver\controller\ContentController.class
